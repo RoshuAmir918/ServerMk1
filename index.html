@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roshan Gamba</title>
+    <link rel="stylesheet" href="indexStyle.css">
+    <script>
+        let viewportChoice = 0;
+        let sideScrollCounter = 0;
+        let downScrollCounter = 0;
+        let scrollIncrement = 20;
+        let trueMouseX = 0;
+        let relMouseX = 0
+        let correctionX = 0;
+        let correctionY = 0;
+        let trueMouseY = 0;
+        let relMouseY = 0;
+        let maxX = 1000;
+        let maxY = 1000;
+        window.addEventListener(
+          "keydown",
+          (event) => {
+              // if(viewportChoice == 1)
+              // {
+              //     if(event.key == "ArrowRight")
+              //     {
+              //         sideScrollCounter += scrollIncrement;
+              //         console.log(sideScrollCounter);
+              //         mouseXText.innerHTML = relMouseX + "";
+              //     }
+              //     else if(event.key == "ArrowLeft")
+              //     {
+              //         sideScrollCounter -= scrollIncrement;
+              //         console.log(sideScrollCounter);
+              //         mouseXText.innerHTML = relMouseX + "";
+              //     }
+              //     else if(event.key == "ArrowUp")
+              //     {
+              //         downScrollCounter -= scrollIncrement;
+              //         console.log(downScrollCounter);
+              //         mouseYText.innerHTML = relMouseY + "";
+              //     }
+              //     else if(event.key == "ArrowDown")
+              //     {
+              //         downScrollCounter+= scrollIncrement;
+              //         console.log(downScrollCounter);
+              //         mouseYText.innerHTML = relMouseY + "";
+              //     }
+              // }
+
+              console.log("Pressed: " + event.key);
+              socket.emit('keyDown', event.key);
+          },
+          true,
+        );
+
+        window.addEventListener(
+          "keyup",
+          (event) => {
+            console.log("Released: " + event.key);
+            socket.emit('keyUp', event.key);
+
+          },
+          true,
+        );
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <div id="xyCoordinates">(0,0)</div>
+    <div class="content" id="centerScreen">
+    </div>
+
+<script>
+    let lastTime = Date.now();
+    let screen = document.getElementById("centerScreen");
+    let rect = screen.getBoundingClientRect()
+    let xyCoordinateText = document.getElementById("xyCoordinates");
+    xyCoordinateText.style.left = rect.left + 1 + "px";
+    console.log("Style: " + xyCoordinateText.style.left)
+    xyCoordinateText.style.top = rect.top - 20 + "px";
+    let xPercent;
+    let yPercent;
+    let leftDown = false;
+
+    screen.addEventListener(
+      "mousemove",
+      (event) => {
+          if(Date.now()-lastTime > 10)
+          {
+              trueMouseX = event.clientX - rect.left;
+              trueMouseY = event.clientY - rect.top;
+              if(viewportChoice == 0)
+              {
+                  xPercent = trueMouseX / (rect.right-rect.left);
+                  yPercent = trueMouseY / (rect.bottom - rect.top);
+                  relMouseX = maxX * xPercent;
+                  relMouseY = maxY * yPercent;
+              }
+
+              xyCoordinateText.innerHTML = "(" + relMouseX.toFixed(2) + ", " + relMouseY.toFixed(2) + ")";
+              socket.emit('mouseMove', [relMouseX.toFixed(0), relMouseY.toFixed(0)]);
+              lastTime = Date.now();
+          }
+      },
+      true,
+    );
+
+
+    // screen.addEventListener(
+    //   "mousedown",
+    //   (event) => {
+    //       console.log("Left Click Down");
+    //       socket.emit('leftClickDown', );
+    //       leftDown = true;
+    //   },
+    //   true,
+    // );
+    // screen.addEventListener(
+    //   "mouseup",
+    //   (event) => {
+    //       leftDown = false;
+    //       console.log("Left Click Up");
+    //       socket.emit('leftClickUp', );
+    //   },
+    //   true,
+    // );
+    //
+    // screen.addEventListener('contextmenu', function(ev) {
+    //     ev.preventDefault();
+    //     console.log("Right Click");
+    //     socket.emit('rightClick', );
+    //     return false;
+    // }, false);
+
+</script>
+</body>
+</html>

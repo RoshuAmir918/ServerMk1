@@ -1,0 +1,75 @@
+/*Starting the background slicing animation*/
+    html
+    {
+      height:100%;
+    }
+
+    body {
+      margin:0;
+      background-color: blue;
+        position: absolute;
+        left: 0px;
+    }
+    .test{
+        background-color: blue;
+        font-size: 100px;
+    }
+    .bg
+    {
+      /*Making it infinite*/
+      animation:slide 3s ease-in-out infinite alternate;
+      /*Creating the gradient background, the color of the background aswell*/
+      background-image: linear-gradient(-60deg, #83DDF7 50%, #CCF3FE 50%);
+      bottom:0;
+      left:-50%;
+      /*making the crossover smooth and so that theyre transparent so you can see one through the other*/
+      opacity:.5;
+      position:fixed;
+      right:-50%;
+      top:0;
+      z-index:-1;
+    }
+/*Causing it to reverse after the end*/
+    .bg2 {
+      animation-direction:alternate-reverse;
+      animation-duration:4s;
+    }
+
+    .bg3 {
+      animation-duration:5s;
+    }
+
+/*Creating the box around the content in the center*/
+    .content {
+        background-color:rgba(255,255,255,.8);
+        min-height: 80%;
+        min-width: 80%;
+        border-radius:.25em;
+        box-shadow:0 0 .25em rgba(158, 67,7,.25);
+        box-sizing:border-box;
+        left:50%;
+        padding:10vmin;
+        position:fixed;
+        text-align:center;
+        top:50%;
+        transform:translate(-50%, -50%);
+    }
+
+/*Animating them,*/
+    @keyframes slide
+    {
+      /*Making them move across the screen*/
+      0% {
+        transform:translateX(-25%);
+      }
+      100% {
+        transform:translateX(25%);
+      }
+    }
+
+    .coordinates {
+        position: absolute;
+        color: white;
+        font-size: 30px;
+        left: 1000px;
+    }
