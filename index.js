@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
 
   socket.on('rightClick', () => {
     if (RPid !== -9) {
-      socket.broadcast.emit('clickRighHi Hope <3  t', );
+      socket.broadcast.emit('clickRight', );
     }
   });
 
