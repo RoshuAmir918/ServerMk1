@@ -100,12 +100,10 @@
               {
                   xPercent = trueMouseX / (rect.right-rect.left);
                   yPercent = trueMouseY / (rect.bottom - rect.top);
-                  relMouseX = maxX * xPercent;
-                  relMouseY = maxY * yPercent;
               }
 
-              xyCoordinateText.innerHTML = "(" + relMouseX.toFixed(2) + ", " + relMouseY.toFixed(2) + ")";
-              socket.emit('mouseMove', [relMouseX.toFixed(0), relMouseY.toFixed(0)]);
+              xyCoordinateText.innerHTML = "(" + xPercent.toFixed(2) + ", " + yPercent.toFixed(2) + ")";
+              socket.emit('mouseMove', [xPercent.toFixed(0), yPercent.toFixed(0)]);
               lastTime = Date.now();
           }
       },
