@@ -106,7 +106,7 @@
               }
 
               xyCoordinateText.innerHTML = "(" + xPercent.toFixed(2) + ", " + yPercent.toFixed(2) + ")";
-              socket.emit('mouseMove', [xPercent.toFixed(0), yPercent.toFixed(0)]);
+              socket.emit('mouseMove', [xPercent.toFixed(2), yPercent.toFixed(2)]);
               lastTime = Date.now();
           }
       },
