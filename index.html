@@ -16,6 +16,9 @@
         let relMouseY = 0;
         let maxX = 1000;
         let maxY = 1000;
+
+
+        
         window.addEventListener(
           "keydown",
           (event) => {
@@ -109,6 +112,10 @@
       },
       true,
     );
+    function reportWindowSize() {
+        rect = screen.getBoundingClientRect()
+    }
+    window.onresize = reportWindowSize;
 
 
     // screen.addEventListener(
