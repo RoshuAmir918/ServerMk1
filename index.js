@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
+const zlib = require('zlib');
 const { Server } = require("socket.io");
 const io = new Server(server);
 
@@ -51,6 +52,10 @@ io.on('connection', (socket) => {
     if (RPid !== -9) {
       socket.broadcast.emit('clickRight', );
     }
+  });
+
+  socket.on('frame', (pixels) => {
+      socket.broadcast.emit('newFrame', pixels);
   });
 
   socket.on('RPIConnect', (RP) => {
