@@ -3,6 +3,7 @@
 <head>
     <title>Roshan Gamba</title>
     <link rel="stylesheet" href="indexStyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
     <script>
         let viewportChoice = 0;
         let sideScrollCounter = 0;
@@ -69,7 +70,25 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
+        var socket = io();
+
+        socket.on('newFrame', function(pixelData) {
+            const len = pixelData.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = pixelData.charCodeAt(i);
+            }
+    
+            // Decompress using pako
+            const decompressedData = pako.inflate(bytes);
+    
+            // Convert the decompressed data to Base64
+            const base64Image = btoa(String.fromCharCode.apply(null, new Uint8Array(decompressedData)));
+    
+            // Set the decompressed Base64 data as the source of the image
+            const imgElement = document.getElementById('centerScreen');
+            imgElement.src = 'data:image/png;base64,' + base64Image;
+    });
     </script>
 </head>
 <body>
@@ -77,7 +96,7 @@
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
     <div id="xyCoordinates">(0,0)</div>
-    <div class="content" id="centerScreen">
+    <img class="content" id="centerScreen">
     </div>
 
 <script>
